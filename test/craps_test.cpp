@@ -3,6 +3,8 @@
 #include "die.h"
 #include "roll.h"
 #include "shooter.h"
+#include "come_out_phase.h"
+#include "point_phase.h"
 
 TEST_CASE("Verify Test Configuration", "verification") {
 	REQUIRE(true == true);
@@ -67,3 +69,44 @@ TEST_CASE("Shooter class test - Alternate Approach")
         REQUIRE(roll_value <= 12);
 	}
 }
+
+TEST_CASE("Phase classes ComeOutPhase OutComes")
+{
+	Die die1, die2;
+	Shooter shooter;
+
+	ComeOutPhase come_out_phase;
+	
+	for(int i = 0; i < 10; i++){
+		Roll* roll = shooter.throw_dice(die1, die2);
+		RollOutcome outcome = come_out_phase.get_outcome(roll);
+
+		// Test that roll can result in natural, craps, or point
+		REQUIRE((outcome == RollOutcome::natural || outcome == RollOutcome::craps || outcome == RollOutcome::point));
+	}
+
+
+}
+
+TEST_CASE("Phase classes PointPhase OutComes")
+{
+	Die die1, die2;
+	Shooter shooter;
+
+	// ComeOutPhase come_out_phase;
+
+	// Assume the point is 4
+	PointPhase point_phase(4);
+	
+	for(int i = 0; i < 10; i++){
+		Roll* roll = shooter.throw_dice(die1, die2);
+		RollOutcome outcome = point_phase.get_outcome(roll);
+
+		// Test that roll can result in point, sevenout, or nopoint
+		REQUIRE((outcome == RollOutcome::point || outcome == RollOutcome::seven_out || outcome == RollOutcome::nopoint));
+	}
+
+
+}
+
+
