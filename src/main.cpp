@@ -48,3 +48,5 @@ int main() {
     // Display shooter rolls.
     cout<<shooter;
 }
+
+// Thanks for a great summer term. I appreciate your quick - no nonsense teaching style and learned alot. Have a great end of summer -Pete
